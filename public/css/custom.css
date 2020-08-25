@@ -1,0 +1,74 @@
+html,body{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden; 
+}
+
+.custom-text-color{
+    color: #1DA1F2;
+}
+
+.custom-background-color{
+    background-color: #1DA1F2;
+}
+
+#middle {
+    overflow-y: auto;
+    height: 1000px;
+    overflow-x: none;
+}
+#middle::-webkit-scrollbar{
+    width: 0px;
+    background: transparent; 
+}
+
+#logout-btn:hover{
+    background-color: #1DA1F2;
+    color: white;
+}
+
+.user-show-photo{
+    top: -75px;
+    position: relative;
+}
+
+.adjust{
+    top: -60px;
+}
+
+
+  
+/* sub-nav */
+/* #pills-tab > li {
+text-decoration: none;
+float: left;
+position: relative;
+background-color: white;
+}
+
+#sub_nav .nav .active a::after {
+    text-decoration: none;
+    border-bottom: 3px solid #1DA1F2;
+    bottom: -2px;
+    content: " ";
+    left: 0;
+    position: absolute;
+    right: 0;
+} */
+
+/* sub-nav */
+#pills-tab > li {
+    float: left;
+    position: relative;
+}
+#sub_nav .nav .active a::after {
+border-bottom: 3px solid #1DA1F2;
+bottom: -2px;
+content: " ";
+left: 0;
+position: absolute;
+right: 0;
+}
+  
