@@ -32,7 +32,7 @@
     <div id="app" class="bg-white">
         <div class="row">
             {{-- left side --}}
-            <div class="col-lg-3 col-md-2 col-sm-2 col-2" style="border-right: 1px solid rgba(0,0,0,.25);">
+            <div class="col-xl-3 col-lg-3 col-md-2 col-sm-2 col-2" style="border-right: 1px solid rgba(0,0,0,.25);">
                  <div class="d-flex align-items-center flex-column" style="height: 100vh;">
                     <div class="p-2">
                         <a href="/home" class="btn">
@@ -155,12 +155,12 @@
             </div>
 
             {{-- middle sidee --}}
-            <div class="col-lg-5 col-md-6 col-sm-10 col-10" style="height: 100vh;" id="middle">
+            <div class="col-xl-6 col-lg-5 col-md-10 col-sm-10 col-10" style="height: 100vh;" id="middle">
                 @yield('middle-content')
             </div>
 
             {{-- right side --}}
-            <div class="col-lg-4 col-md-4 col-sm-0 d-sm-none d-md-block d-none d-sm-block " style="border-left: 1px solid rgba(0,0,0,.25);">
+            <div class="col-xl-3 col-lg-4 col-md-0 col-sm-0  d-none d-lg-block" style="border-left: 1px solid rgba(0,0,0,.25);">
                 @yield('right-content')
             </div>
         </div>
