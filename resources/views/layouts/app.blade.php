@@ -120,7 +120,7 @@
 
 
             {{-- middle sidee --}}
-            <div class="col-lg-5 col-md-3 col-10" style="height: 100vh; display:none;" id="middle">
+            <div class="col-lg-5 col-md-3 col-10" style="height: 100vh;">
                 @yield('middle-content')
             </div>
 
