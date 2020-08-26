@@ -31,8 +31,8 @@ class UserSeeder extends Seeder
         //     ]);
         // }
 
-        $users = factory(App\User::class, 50)->create();
-        for($i = 2; $i <= 50; $i++){
+        $users = factory(App\User::class, 10)->create();
+        for($i = 2; $i <= 10; $i++){
             for($x = 0; $x < 5; $x++){
                 factory(App\Tweet::class)->create(['user_id' => $i]);
             }
