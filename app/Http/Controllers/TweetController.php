@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class TweetController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(){
         $users = User::all()->except(Auth::id());
 
@@ -33,6 +38,12 @@ class TweetController extends Controller
         Auth::user()->tweets()->create([
             'body' => $data['tweet']
         ]);
-        return redirect('/home');
+        return redirect()->back();
+    }
+
+    public function show(User $user, Tweet $tweet){
+        $user = User::findOrFail($user->id);
+        $tweet = Tweet::findorFail($tweet->id);
+        return view('tweet.show', compact(['user', 'tweet']));
     }
 }

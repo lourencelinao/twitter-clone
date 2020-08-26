@@ -63,28 +63,31 @@
             }
         </style>
     </head>
-    <body>
+    <body style="background-color: #1DA1F2;">
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/home') }}" style="color: white;">Home</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}" style="color: white;">Login</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}" style="color: white;">Register</a>
                         @endif
                     @endauth
                 </div>
             @endif
 
-            <div class="content">
-                <div class="title m-b-md">
+            <div class="content" style="color: white;">
+                <div class="title m-b-md text-white">
                     Twitter
                 </div>
                     <p>made by Lourence Linao</p>
-                <div class="links">
+                <div class="links" >
+                    <a href="" style="color: white;">Github</a>
+                    <a href="" style="color: white;">LinkedIn</a>
+                    <a href="" style="color: white;">Resume</a>
                 </div>
             </div>
         </div>

@@ -13,4 +13,13 @@ class Tweet extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function likes(){
+        return $this->morphMany('App\Like', 'likeable' );
+        // return $this->morphMany('App\Like', 'likeable', $type = 'App\Tweet', $id = 'likeable_type', 'user_id' );
+    }
+
+    public function retweets(){
+        return $this->morphMany('App\Retweet', 'retweetable');
+    }
 }

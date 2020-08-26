@@ -72,7 +72,27 @@ position: absolute;
 right: 0;
 }
 
-.loading{
-    width: 100%;
-    height: 100%;
+.heart:hover{
+    color: red !important;
 }
+
+.retweet:hover{
+    color: green;
+}
+
+.comment:hover{
+    color: skyblue;
+}
+
+.unfollow:hover span {
+    display:none
+}
+
+.unfollow:hover:after {
+    content:"Unfollow";
+}
+
+.tweet-box:hover {
+    /* position: relative; */
+    background-color: #f7f7f7 !important;
+  }

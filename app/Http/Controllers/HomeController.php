@@ -2,28 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Retweet;
 use App\Tweet;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         $users = User::all()->except(Auth::id());
@@ -37,7 +29,16 @@ class HomeController extends Controller
         $users = $users->whereNotIn('id', $pluck)->take(5);
         
         //filter tweets by returning the tweets of anyone the user follows
+        $timeline = [];
         $tweets = Tweet::whereIn('user_id', $pluck)->latest()->get();
+        // array_push($timeline, $tweets);
+        // // dd($timeline[0][0]);
+        // $retweets = Retweet::whereIn('user_id', $pluck)->latest()->get();
+        // array_push($timeline, $retweets);
+        // // dd($timeline);
+        // $timeline = $timeline->collapse();
+        // dd($timeline);
+        // dd($retweets[0]->retweetable);
         return view('/home', compact(['users', 'tweets']));
     }
 }

@@ -21,7 +21,9 @@
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
     {{-- font awesome --}}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
 
     {{-- jQuery CDN --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -30,41 +32,39 @@
     <div id="app" class="bg-white">
         <div class="row">
             {{-- left side --}}
-            <div class="col-lg-3 col-md-3 col-2" style="border-right: 1px solid rgba(0,0,0,.25);">
+            <div class="col-lg-3 col-md-2 col-sm-2 col-2" style="border-right: 1px solid rgba(0,0,0,.25);">
                  <div class="d-flex align-items-center flex-column" style="height: 100vh;">
                     <div class="p-2">
                         <a href="/home" class="btn">
-                            <img src="{{asset('uploads/twitter.png')}}" 
-                            width="30" height="30" 
-                            alt="">
+                            <i class="fab fa-twitter fa-2x custom-text-color"></i>
                         </a>
                     </div>
-                    <div class="p-2">
+                    <div class="p-2 py-3">
                         <a href="/home">
                             <i class="fa fa-home fa-2x custom-text-color"></i>
                         </a>
                     </div>
-                    <div class="p-2">
+                    <div class="p-2 py-3">
                         <a href="">
                             <i class="fa fa-hashtag fa-2x text-dark"></i>
                         </a>
                     </div>
-                    <div class="p-2">
+                    <div class="p-2 py-3">
                         <a href="">
                             <i class="fa fa-bell fa-2x text-dark"></i>
                         </a>
                     </div>
-                    <div class="p-2">
+                    <div class="p-2 py-3">
                         <a href="">
                             <i class="fa fa-envelope fa-2x text-dark"></i>
                         </a>
                     </div>
-                    <div class="p-2">
+                    <div class="p-2 py-3">
                         <a href="">
                             <i class="fa fa-bookmark fa-2x text-dark"></i>
                         </a>
                     </div>
-                    <div class="p-2">
+                    <div class="p-2 py-3">
                         <a href="">
                             <i class="fa fa-list-alt fa-2x text-dark"></i>
                         </a>
@@ -80,8 +80,9 @@
                         </a>
                     </div>
                     <div class="p-2">
-                        <button class="btn btn-lg btn-block custom-background-color pl-5 pr-5 text-white" style="border-radius: 25px;">
-                            Tweet
+                        <button class="btn btn-lg btn-block custom-background-color text-white" 
+                        style="border-radius: 75px;" data-toggle="modal" data-target="#exampleModal">
+                            <i class="fas fa-feather"></i>
                         </button>
                     </div>
                     <div class="p-2 mt-auto">
@@ -90,16 +91,11 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
                             style="border-radius: 35px;" id="logout-btn">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle mr-2"
-                                    style="max-height: 60px" 
+                                    <img class="rounded-circle"
+                                    style="max-height: 50px" 
                                     src="https://i.pravatar.cc/200?u={{Auth::user()->email}}" 
                                     alt="profile_picture">
-                                    <div class="font-weight-bold">
-                                        {{Auth::user()->name}}
-                                    </div>
-                                    <div class="pl-2 ml-auto">
-                                        <i class="fa fa-chevron-up"></i>
-                                    </div>
+                                    
                                 </div>
                             </button>
                             <div class="dropdown-menu">
@@ -118,19 +114,59 @@
                 </div>
             </div>
 
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="/tweets" method="POST">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-lg-12 d-flex py-2">
+            
+                                        <a href="/users/{{Auth::id()}}">
+                                            <img class="rounded-circle mr-2"
+                                            style="max-height: 60px" 
+                                            src="https://i.pravatar.cc/300?u={{Auth::user()->email}}" 
+                                            alt="profile_picture">
+                                        </a>
+                                        {{-- tweet input --}}
+                                        <textarea class="form-control @error('tweet') is-invalid @enderror" name="tweet" 
+                                        id="" rows="2" cols="2"
+                                        placeholder="What's poppin?" style="border:none; border-bottom: 1px solid rgba(0,0,0, .25);">
+                                        </textarea>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn custom-background-color text-white rounded-pill">
+                                    
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
             {{-- middle sidee --}}
-            <div class="col-lg-5 col-md-3 col-10" style="height: 100vh;" id="middle">
+            <div class="col-lg-5 col-md-6 col-sm-10 col-10" style="height: 100vh;" id="middle">
                 @yield('middle-content')
             </div>
 
             {{-- right side --}}
-            <div class="col-lg-4 col-md-3" style="border-left: 1px solid rgba(0,0,0,.25);">
+            <div class="col-lg-4 col-md-4 col-sm-0 d-sm-none d-md-block d-none d-sm-block " style="border-left: 1px solid rgba(0,0,0,.25);">
                 @yield('right-content')
             </div>
         </div>
     </div>
     {{-- custom script --}}
-        <script src="{{ asset('js/custom.js') }}" defer></script>
+    <script src="{{ asset('js/custom.js') }}" defer></script>
+    
 </body>
 </html>
