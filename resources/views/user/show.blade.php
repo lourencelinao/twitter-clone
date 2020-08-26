@@ -24,7 +24,7 @@
         {{-- background image --}}
         <img class="img-fluid"
         style="max-height: 100%; max-width: 100%;" 
-        src="https://loremflickr.com/g/750/250/{{$profile->id}}" 
+        src="https://loremflickr.com/g/1000/300/{{$profile->id}}" 
         alt="background_picture">
         {{-- user photo --}}
     </div>
