@@ -13,14 +13,14 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name' => 'Lourence Linao',
-            // 'description' => 'wtf',
-            'email' => 'lourencelinao13@gmail.com',
-            'password' => bcrypt('test'),
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
+        // DB::table('users')->insert([
+        //     'name' => 'Lourence Linao',
+        //     // 'description' => 'wtf',
+        //     'email' => 'lourencelinao13@gmail.com',
+        //     'password' => bcrypt('test'),
+        //     'created_at' => now(),
+        //     'updated_at' => now()
+        // ]);
 
         // $faker = Factory::create();
         // for($i = 0; $i < 5; $i++){

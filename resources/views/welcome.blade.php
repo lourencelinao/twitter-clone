@@ -85,9 +85,9 @@
                 </div>
                     <p>made by Lourence Linao</p>
                 <div class="links" >
-                    <a href="" style="color: white;">Github</a>
-                    <a href="" style="color: white;">LinkedIn</a>
-                    <a href="" style="color: white;">Resume</a>
+                    <a href="https://github.com/lourencelinao/twitter-clone.git" style="color: white;">Github</a>
+                    <a href="https://www.linkedin.com/in/lourence-linao-124150177/" style="color: white;">LinkedIn</a>
+                    <a href="#" style="color: white;">Resume</a>
                 </div>
             </div>
         </div>
