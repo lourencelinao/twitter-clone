@@ -146,7 +146,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn custom-background-color text-white rounded-pill">
-                                    
+                                    Tweet
                                 </button>
                             </div>
                         </form>
