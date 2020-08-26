@@ -125,7 +125,7 @@
             </div>
 
             {{-- right side --}}
-            <div class="col-lg-4 col-md-3" style="border-left: 1px solid rgba(0,0,0,.25); display:none;" id="right">
+            <div class="col-lg-4 col-md-3" style="border-left: 1px solid rgba(0,0,0,.25);">
                 @yield('right-content')
             </div>
         </div>

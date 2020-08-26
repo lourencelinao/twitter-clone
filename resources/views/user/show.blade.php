@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('middle-content')
-<div class="row">
+<div class="row" style="display:none;" id="right">
     {{-- top part --}}
     <div class="col-lg-12 pb-1" style="border-bottom: 1px solid rgba(0,0,0, .25);">
         <div class="h5 font-weight-bold">
@@ -121,7 +121,7 @@
 @endsection
 
 @section('right-content')
-<div class="container pb-3">
+<div class="container pb-3" style="display:none;" id="right">
     <div class="row">
         {{-- search --}}
         <div class="col-lg-9 form-group mt-1">
