@@ -120,12 +120,12 @@
 
 
             {{-- middle sidee --}}
-            <div class="col-lg-5 col-md-3 col-10" style="height: 100vh;" id="middle">
+            <div class="col-lg-5 col-md-3 col-10" style="height: 100vh; display:none;" id="middle">
                 @yield('middle-content')
             </div>
 
             {{-- right side --}}
-            <div class="col-lg-4 col-md-3" style="border-left: 1px solid rgba(0,0,0,.25);">
+            <div class="col-lg-4 col-md-3" style="border-left: 1px solid rgba(0,0,0,.25); display:none;" id="right">
                 @yield('right-content')
             </div>
         </div>

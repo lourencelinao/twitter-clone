@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function show(User $user){
         //retrieve all the tweets of the user
-        $tweets = $user->tweets;
+        $tweets = $user->tweets()->latest()->get();
 
         //take all users except the user 
         $users = User::all()->except($user->id);

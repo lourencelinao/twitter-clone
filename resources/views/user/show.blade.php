@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('middle-content')
-
 <div class="row">
     {{-- top part --}}
     <div class="col-lg-12 pb-1" style="border-bottom: 1px solid rgba(0,0,0, .25);">
@@ -115,6 +114,10 @@
         </div>
     </div>
 </div>
+{{-- loading icon --}}
+<div class="loading d-flex justify-content-center">
+    <img src="https://loading.io/asset/403312" alt="" id="middle-loading">
+</div>
 @endsection
 
 @section('right-content')
@@ -143,4 +146,7 @@
         </div>
     </div>
 </div>  
+<div class="loading d-flex justify-content-center" id="right-loading">
+    <img src="https://loading.io/asset/403312" alt="">
+</div>
 @endsection
