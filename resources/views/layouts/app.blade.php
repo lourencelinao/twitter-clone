@@ -120,7 +120,7 @@
 
 
             {{-- middle sidee --}}
-            <div class="col-lg-5 col-md-3 col-10" style="height: 100vh;">
+            <div class="col-lg-5 col-md-3 col-10" style="height: 100vh;" id="middle">
                 @yield('middle-content')
             </div>
 
@@ -131,6 +131,6 @@
         </div>
     </div>
     {{-- custom script --}}
-    <script src="{{ asset('js/custom.js') }}" defer></script>
+        <script src="{{ asset('js/custom.js') }}" defer></script>
 </body>
 </html>
