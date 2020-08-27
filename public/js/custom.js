@@ -6,8 +6,5 @@ $(document).ready(function() {
      });
 
      //display when fully loaded
-     $('#middle').show();
-     $('#middle-loading').fadeOut('slow');
-     $('#right').show();
-     $('#right-loading').fadeOut('slow');
+     $('#tweets').show();
 });

@@ -22,17 +22,17 @@
     {{-- profile photos --}}
     <div class="col-lg-12 px-0">
         {{-- background image --}}
-        <img class="img-fluid"
+        <img type="button" class="img-fluid"
         style="max-height: 100%; max-width: 100%;" 
         src="https://loremflickr.com/g/1000/300/{{$profile->id}}" 
-        alt="background_picture">
-        {{-- user photo --}}
+        alt="background_picture" data-toggle="modal" data-target=".bd-example-modal-xl">
     </div>
+    {{-- user photo --}}
     <div class="col-lg-12 d-flex align-items-center user-show-photo ml-2">
-        <img class="rounded-circle shadow-sm"
+        <img type="button" class="rounded-circle shadow-sm"
         style="max-height: 150px; border: 5px solid white;" 
         src="https://i.pravatar.cc/300?u={{$profile->email}}" 
-        alt="profile_picture">
+        alt="profile_picture" data-toggle="modal" data-target=".bd-example-modal-sm">
         {{-- profile follow/unfollow --}}
         @if($profile->id != Auth::id())
             @if(Auth::user()->follows->contains($profile->id))
@@ -303,6 +303,33 @@
     </div>
 </div>
 
+{{-- background picture modal--}}
+<div class="modal fade bd-example-modal-xl " tabindex="-1" role="document" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="row">
+            <div class="col-lg-12 py-0 px-0 d-flex justify-content-center">
+                <img class="img-fluid"
+                style="" 
+                src="https://loremflickr.com/g/1000/300/{{$profile->id}}" 
+                alt="background_picture">
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- small modal --}}
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="row">
+          <div class="col-lg-12">
+            <img class="rounded-circle shadow-sm"
+            style="" 
+            src="https://i.pravatar.cc/300?u={{$profile->email}}" 
+            alt="profile_picture">
+          </div>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @section('right-content')

@@ -44,7 +44,7 @@
         </div>
     </div>
     {{-- tweet boxes --}}
-    <div class="row">
+    <div class="row" id="tweets" style="display:none;">
         @foreach ($tweets as $tweet)
             <x-tweet-box :tweet="$tweet" />
         @endforeach
