@@ -76,8 +76,8 @@
         <span class="ml-2 font-weight-bold h3">{{$profile->name}}</span> <br>
         <span class="ml-2"><i class="fas fa-calendar-alt fa-lg custom-text-color mr-2"></i></span>Joined {{$profile->created_at->format('Y-m-d')}} <br>
         <span class="ml-2">{{$profile->description}}</span> <br>
-        <span class="ml-2"><a href="" class="font-weight-bold">{{$profile->follows->count()}}</a></span> following
-        <span class="ml-2"><a href="" class="font-weight-bold">{{App\Follow::all()->where('following_user_id', $profile->id)->count()}}</a></span> followers
+        <span class="ml-2"><a href="/users/{{$profile->id}}/following" class="font-weight-bold">{{$profile->follows->count()}}</a></span> following
+        <span class="ml-2"><a href="/users/{{$profile->id}}/followers" class="font-weight-bold">{{App\Follow::all()->where('following_user_id', $profile->id)->count()}}</a></span> followers
     </div>
     {{-- tab and pills --}}
     <div class="col-lg-12 adjust" style="border-bottom: 1px solid rgba(0,0,0, .25);" id="sub_nav">
@@ -104,7 +104,7 @@
                     <a href="/users/{{$tweet->user->id}}/tweet/{{$tweet->id}}" class="stretched-link"></a>
                     <div class="col-lg-12 pl-2 py-2" style="border-bottom: 1px solid rgba(0,0,0, .25);">
                         <div class="d-flex">
-                            <a href="/users/{{$tweet->user->id}}">
+                            <a href="/users/{{$tweet->user->id}}" style="position: relative; z-index: 1;">
                                 <img class="rounded-circle mr-2"
                                 style="max-height: 60px" 
                                 src="https://i.pravatar.cc/300?u={{$tweet->user->email}}" 
@@ -113,7 +113,9 @@
                             <div class="col-lg-11">
                                 <div class="d-flex align-items-start">
                                     <span class="h6 font-weight-bold mr-2">
-                                        <a href="/users/{{$tweet->user->id}}">{{$tweet->user->name}}</a>
+                                        <a href="/users/{{$tweet->user->id}}" style="position: relative; z-index: 1;">
+                                            {{$tweet->user->name}}
+                                        </a>
                                     </span>
                                     <span class="h6">
                                         {{Carbon\Carbon::createFromTimeStamp(strtotime($tweet->created_at))->diffForHumans(null, true)}}
@@ -142,7 +144,7 @@
                                                 @method('DELETE')
                                                 <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
                                                 <button type="submit" class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;">
-                                                    <i class="fa fa-heart fa-lg custom-text-color heart" style="color: red;"> {{$tweet->likes->count()}}</i>
+                                                    <i class="fa fa-heart fa-lg custom-text-color heart" style="color: red;"> {{($tweet->likes->count() > 0)? $tweet->likes->count(): ''}}</i>
                                                 </button>
                                             </form>
                                             @else
@@ -151,7 +153,7 @@
                                                 <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
                                                 {{-- <input type="hidden" name="user_id" value="{{Auth::id()}}"> --}}
                                                 <button type="submit" class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;">
-                                                    <i class="fa fa-heart fa-lg custom-text-color heart"> {{$tweet->likes->count()}}</i>
+                                                    <i class="fa fa-heart fa-lg custom-text-color heart"> {{($tweet->likes->count() > 0)? $tweet->likes->count(): ''}}</i>
                                                 </button>
                                             </form>
                                         @endif
@@ -170,7 +172,7 @@
                     <a href="/users/{{$tweet->user->id}}/tweet/{{$tweet->id}}" class="stretched-link"></a>
                     <div class="col-lg-12 pl-2 py-2" style="border-bottom: 1px solid rgba(0,0,0, .25);">
                         <div class="d-flex">
-                            <a href="/users/{{$tweet->user->id}}">
+                            <a href="/users/{{$tweet->user->id}}" style="position: relative; z-index: 1;">
                                 <img class="rounded-circle mr-2"
                                 style="max-height: 60px" 
                                 src="https://i.pravatar.cc/300?u={{$tweet->user->email}}" 
@@ -179,7 +181,9 @@
                             <div class="col-lg-11">
                                 <div class="d-flex align-items-start">
                                     <span class="h6 font-weight-bold mr-2">
-                                        <a href="/users/{{$tweet->user->id}}">{{$tweet->user->name}}</a>
+                                        <a href="/users/{{$tweet->user->id}}" style="position: relative; z-index: 1;">
+                                            {{$tweet->user->name}}
+                                        </a>
                                     </span>
                                     <span class="h6">
                                         {{Carbon\Carbon::createFromTimeStamp(strtotime($tweet->created_at))->diffForHumans(null, true)}}
@@ -208,7 +212,7 @@
                                                 @method('DELETE')
                                                 <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
                                                 <button type="submit" class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;">
-                                                    <i class="fa fa-heart fa-lg custom-text-color heart" style="color: red;"> {{$tweet->likes->count()}}</i>
+                                                    <i class="fa fa-heart fa-lg custom-text-color heart" style="color: red;"> {{($tweet->likes->count() > 0)? $tweet->likes->count(): ''}}</i>
                                                 </button>
                                             </form>
                                             @else
@@ -217,7 +221,7 @@
                                                 <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
                                                 {{-- <input type="hidden" name="user_id" value="{{Auth::id()}}"> --}}
                                                 <button type="submit" class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;">
-                                                    <i class="fa fa-heart fa-lg custom-text-color heart"> {{$tweet->likes->count()}}</i>
+                                                    <i class="fa fa-heart fa-lg custom-text-color heart"> {{($tweet->likes->count() > 0)? $tweet->likes->count(): ''}}</i>
                                                 </button>
                                             </form>
                                         @endif
@@ -232,10 +236,10 @@
             <div class="tab-pane fade" id="pills-likes" role="tabpanel" aria-labelledby="pills-contact-tab">
                 @for ($i = count($likes)-1; $i >= 0; $i--)
                     <div class="row adjust tweet-box" style="transform: rotate(0);">
-                        <a href="/users/{{$tweet->user->id}}/tweet/{{$tweet->id}}" class="stretched-link"></a>
+                        <a href="/users/{{$likes[$i]->likeable->user->id}}/tweet/{{$likes[$i]->likeable->id}}" class="stretched-link"></a>
                         <div class="col-lg-12 pl-2 py-2" style="border-bottom: 1px solid rgba(0,0,0, .25);">
                             <div class="d-flex">
-                                <a href="/users/{{$likes[$i]->likeable->user->id}}">
+                                <a href="/users/{{$likes[$i]->likeable->user->id}}" style="position: relative; z-index: 1;">
                                     <img class="rounded-circle mr-2"
                                     style="max-height: 60px" 
                                     src="https://i.pravatar.cc/300?u={{$likes[$i]->likeable->user->email}}" 
@@ -244,7 +248,9 @@
                                 <div class="col-lg-11">
                                     <div class="d-flex align-items-start">
                                         <span class="h6 font-weight-bold mr-2">
-                                            <a href="/users/{{$likes[$i]->likeable->user->id}}">{{$likes[$i]->likeable->user->name}}</a>
+                                            <a href="/users/{{$likes[$i]->likeable->user->id}}" style="position: relative; z-index: 1;">
+                                                {{$likes[$i]->likeable->user->name}}
+                                            </a>
                                         </span>
                                         <span class="h6">
                                             {{Carbon\Carbon::createFromTimeStamp(strtotime($likes[$i]->likeable->created_at))->diffForHumans(null, true)}}

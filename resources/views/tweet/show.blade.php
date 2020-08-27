@@ -79,7 +79,7 @@
                         @method('DELETE')
                         <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
                         <button type="submit" class="btn btn-md rounded-circle" style="position: relative; z-index: 1;">
-                            <i class="fa fa-heart fa-lg custom-text-color heart" style="color: red;"> {{$tweet->likes->count()}}</i>
+                            <i class="fa fa-heart fa-lg custom-text-color heart" style="color: red;"> {{($tweet->likes->count() > 0) ? $tweet->likes->count() : ''}}</i>
                         </button>
                     </form>
                     @else
@@ -88,7 +88,7 @@
                         <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
                         {{-- <input type="hidden" name="user_id" value="{{Auth::id()}}"> --}}
                         <button type="submit" class="btn btn-md rounded-circle" style="position: relative; z-index: 1;">
-                            <i class="fa fa-heart fa-lg custom-text-color heart"> {{$tweet->likes->count()}}</i>
+                            <i class="fa fa-heart fa-lg custom-text-color heart"> {{($tweet->likes->count() > 0) ? $tweet->likes->count() : ''}}</i>
                         </button>
                     </form>
                 @endif

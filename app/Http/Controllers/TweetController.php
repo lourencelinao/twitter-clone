@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Like;
 use App\User;
 use App\Tweet;
 use Illuminate\Http\Request;
@@ -45,5 +46,13 @@ class TweetController extends Controller
         $user = User::findOrFail($user->id);
         $tweet = Tweet::findorFail($tweet->id);
         return view('tweet.show', compact(['user', 'tweet']));
+    }
+
+    public function destroy(Tweet $tweet){
+        //delete likes of the tweet
+        Like::where('likeable_id', $tweet->id)->delete();
+        //delete tweet
+        $tweet->delete();
+        return redirect()->back();
     }
 }

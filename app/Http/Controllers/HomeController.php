@@ -26,11 +26,13 @@ class HomeController extends Controller
         $pluck = $pluck->push(Auth::id());
 
         //filter the users by removing the users who he followed by using whereNotIn
-        $users = $users->whereNotIn('id', $pluck)->take(5);
+        $users = $users->whereNotIn('id', $pluck)->take(3);
         
         //filter tweets by returning the tweets of anyone the user follows
         $timeline = [];
         $tweets = Tweet::whereIn('user_id', $pluck)->latest()->get();
+        // following users list
+        $followingUsers = Auth::user()->follows->take(3);
         // array_push($timeline, $tweets);
         // // dd($timeline[0][0]);
         // $retweets = Retweet::whereIn('user_id', $pluck)->latest()->get();
@@ -39,6 +41,6 @@ class HomeController extends Controller
         // $timeline = $timeline->collapse();
         // dd($timeline);
         // dd($retweets[0]->retweetable);
-        return view('/home', compact(['users', 'tweets']));
+        return view('/home', compact(['users', 'tweets', 'followingUsers']));
     }
 }

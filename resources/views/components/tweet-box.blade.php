@@ -17,6 +17,30 @@
                 <span class="h6">
                     {{Carbon\Carbon::createFromTimeStamp(strtotime($tweet->created_at))->diffForHumans(null, true)}}
                 </span>
+                <div class="ml-auto">
+                    <div class="dropdown">
+                        <button class="btn rounded-circle btn-sm chevron-down" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
+                        aria-haspopup="true" aria-expanded="false" style="position: relative; z-index: 1;">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          @if($tweet->user->id == Auth::id())
+                            <form action="/tweets/{{$tweet->id}}" method="POST">
+                                @csrf
+                                @method('delete')
+                                <button class="dropdown-item">Delete</button>
+                            </form>
+                            @else
+                                <form action="/follows/delete" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <input type="hidden" name="user_id" value="{{$tweet->user->id}}">
+                                    <button class="dropdown-item">Unfollow {{$tweet->user->name}}</button>
+                                </form>
+                          @endif
+                        </div>
+                      </div>
+                </div>
             </div>
             <p class="justify-text">
                 {{$tweet->body}}
@@ -55,7 +79,9 @@
                             <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
                             {{-- <input type="hidden" name="user_id" value="{{Auth::id()}}"> --}}
                             <button type="submit" class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;">
-                                <i class="fa fa-heart fa-lg custom-text-color heart"> {{$tweet->likes->count()}}</i>
+                                <i class="fa fa-heart fa-lg custom-text-color heart"> 
+                                    {{($tweet->likes->count() > 0)? $tweet->likes->count(): ''}}
+                                </i>
                             </button>
                         </form>
                     @endif

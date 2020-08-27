@@ -69,17 +69,17 @@
                             <i class="fa fa-list-alt fa-2x text-dark"></i>
                         </a>
                     </div>
-                    <div class="p-2">
+                    <div class="p-2 py-3">
                         <a href="/users/{{Auth::id()}}">
                             <i class="fa fa-user fa-2x text-dark"></i>
                         </a>
                     </div>
-                    <div class="p-2">
+                    <div class="p-2 py-3">
                         <a href="">
                             <i class="fa fa-ellipsis-h fa-2x text-dark"></i>
                         </a>
                     </div>
-                    <div class="p-2">
+                    <div class="p-2 py-3">
                         <button class="btn btn-lg btn-block custom-background-color text-white" 
                         style="border-radius: 75px;" data-toggle="modal" data-target="#exampleModal">
                             <i class="fas fa-feather"></i>
@@ -119,6 +119,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
+                            <div class="h3">Compose a tweet</div>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -155,12 +156,13 @@
             </div>
 
             {{-- middle sidee --}}
-            <div class="col-xl-6 col-lg-5 col-md-10 col-sm-10 col-10" style="height: 100vh;" id="middle">
+            <div class="col-xl-5 col-lg-5 col-md-10 col-sm-10 col-10" style="height: 100vh;" id="middle">
                 @yield('middle-content')
             </div>
 
             {{-- right side --}}
-            <div class="col-xl-3 col-lg-4 col-md-0 col-sm-0  d-none d-lg-block" style="border-left: 1px solid rgba(0,0,0,.25);">
+            <div class="col-xl-4 col-lg-4 col-md-0 col-sm-0  d-none d-lg-block" 
+            style="border-left: 1px solid rgba(0,0,0,.25); ">
                 @yield('right-content')
             </div>
         </div>

@@ -30,12 +30,12 @@
     <div id="app" class="bg-white">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-3 col-0  custom-background-color d-flex align-items-center" style="height: 100vh;">
-                    <div class="mx-auto">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-5 col-0 custom-background-color d-flex align-items-center" style="height: 100vh;">
+                    <div class="mx-auto ">
                         <i class="fab fa-twitter fa-10x text-white"></i>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-9 col-12 d-flex align-items-center" style="height: 100vh;">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-7 col-12 d-flex align-items-center" style="height: 100vh;">
                     <div class="mx-auto rounded">
                         <div class="card">
                             <div class="card-header">{{ __('Login') }}</div>

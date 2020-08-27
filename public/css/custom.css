@@ -85,7 +85,7 @@ right: 0;
 }
 
 .unfollow:hover span {
-    display:none
+    display:none;
 }
 
 .unfollow:hover:after {
@@ -95,4 +95,8 @@ right: 0;
 .tweet-box:hover {
     /* position: relative; */
     background-color: #f7f7f7 !important;
-  }
+}
+
+.chevron-down:hover{
+    background-color: #1DA1F2;
+}

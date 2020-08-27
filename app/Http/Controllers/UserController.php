@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Follow;
 use App\Tweet;
 use App\User;
 use Illuminate\Http\Request;
@@ -22,7 +23,8 @@ class UserController extends Controller
         //add user id into the array of users he followed
         $pluck->push(Auth::id());
         $users = $users->whereNotIn('id', $pluck);
-        return view('user.index', compact(['users']));
+        $followingUsers = Auth::user()->follows->take(3);
+        return view('user.index', compact(['users', 'followingUsers']));
     }
 
     public function show(User $user){
@@ -53,5 +55,29 @@ class UserController extends Controller
         $user->update($data);
         return redirect()->back();
         
+    }
+
+    public function following(User $user){
+        $followingUsers = $user->follows;
+        $users = User::all()->except($user->id);
+        $pluck = $user->follows->pluck('id');
+        $pluck->push($user->id);
+        $users = $users->whereNotIn('id', $pluck)->take(5);
+        return view('user.show-following', compact(['followingUsers', 'users']));
+    }
+
+    public function followers(User $user){
+        //take followers collection
+        $followers = Follow::where('following_user_id', $user->id)->get();
+        //initialize array
+        $pluck = array();
+        //retrieve user id's
+        for($i = 0; $i < count($followers); $i++){
+            array_push($pluck, $followers[$i]->user_id);
+        }
+        //retrieve user class
+        $followers = User::whereIn('id', $pluck)->get();
+        
+        return view('user.show-followers', compact('followers'));
     }
 }
