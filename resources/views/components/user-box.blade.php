@@ -21,10 +21,13 @@
             {{-- <span>{{$user->name}}</span> --}}
         </div>
         <div class="ml-auto d-flex align-items-center side-follow-btn">
-            <form action="/follows" method="POST">
+            <form action="/follows" method="POST" onsubmit="userboxFollowBtn.disabled = true; return true;">
                 @csrf
                 <input type="hidden" name="user_id" value="{{$user->id}}">
-                <button class="btn font-weight-bold custom-text-color" style="border: 1px solid #1DA1F2; border-radius: 25px;">
+                <button class="btn font-weight-bold custom-text-color" 
+                style="border: 1px solid #1DA1F2; border-radius: 25px;"
+                id="userboxFollowBtn"
+                >
                     Follow
                 </button>
             </form>

@@ -48,10 +48,10 @@
                 </div>
                 @else
                 <div class="mt-5 pt-3 mr-2 d-flex ml-auto text-dark">
-                    <form action="/follows" method="POST">
+                    <form action="/follows" method="POST" onsubmit="followBtn.disabled = true; return true;">
                         @csrf
                         <input type="hidden" name="user_id" value="{{$profile->id}}">
-                        <button class="btn btn-md rounded-pill custom-background-color text-white font-weight-bold">
+                        <button class="btn btn-md rounded-pill custom-background-color text-white font-weight-bold" id="followBtn">
                             Follow
                         </button>
                     </form>
@@ -99,139 +99,33 @@
         <div class="tab-content" id="pills-tabContent">
             {{-- tweets tab --}}
             <div class="tab-pane fade show active adjust" id="pills-tweets" role="tabpanel" aria-labelledby="pills-tweets-tab">
-                @foreach ($tweets as $tweet)
-                <div class="row adjust tweet-box" style="transform: rotate(0);">
-                    <a href="/users/{{$tweet->user->id}}/tweet/{{$tweet->id}}" class="stretched-link"></a>
-                    <div class="col-lg-12 pl-2 py-2" style="border-bottom: 1px solid rgba(0,0,0, .25);">
-                        <div class="d-flex">
-                            <a href="/users/{{$tweet->user->id}}" style="position: relative; z-index: 1;">
-                                <img class="rounded-circle mr-2"
-                                style="max-height: 60px" 
-                                src="https://i.pravatar.cc/300?u={{$tweet->user->email}}" 
-                                alt="profile_picture">
-                            </a>
-                            <div class="col-lg-11">
-                                <div class="d-flex align-items-start">
-                                    <span class="h6 font-weight-bold mr-2">
-                                        <a href="/users/{{$tweet->user->id}}" style="position: relative; z-index: 1;">
-                                            {{$tweet->user->name}}
-                                        </a>
-                                    </span>
-                                    <span class="h6">
-                                        {{Carbon\Carbon::createFromTimeStamp(strtotime($tweet->created_at))->diffForHumans(null, true)}}
-                                    </span>
-                                </div>
-                                <p class="justify-text">
-                                    {{$tweet->body}}
-                                </p>
-                                <div class="d-flex">
-                                    <span class="mr-5">
-                                        <form action="">
-                                            <button class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;">
-                                                <i class="fa fa-comment fa-lg custom-text-color comment"></i>
-                                            </button>
-                                        </form>
-                                    </span>
-                                    <span class="mr-5">
-                                        <button class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;">
-                                            <i class="fa fa-retweet fa-lg custom-text-color retweet"></i>
-                                        </button >
-                                    </span>
-                                    <span class="">
-                                        @if(App\Like::where(['user_id' => Auth::id(), 'likeable_id' => $tweet->id])->count() > 0)
-                                            <form action="/likes/delete" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
-                                                <button type="submit" class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;">
-                                                    <i class="fa fa-heart fa-lg custom-text-color heart" style="color: red;"> {{($tweet->likes->count() > 0)? $tweet->likes->count(): ''}}</i>
-                                                </button>
-                                            </form>
-                                            @else
-                                            <form action="/likes" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
-                                                {{-- <input type="hidden" name="user_id" value="{{Auth::id()}}"> --}}
-                                                <button type="submit" class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;">
-                                                    <i class="fa fa-heart fa-lg custom-text-color heart"> {{($tweet->likes->count() > 0)? $tweet->likes->count(): ''}}</i>
-                                                </button>
-                                            </form>
-                                        @endif
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
+                <div class="row" id="tweets">
+                    @for ($i = 0; $i < count($timeline); $i++)
+                        @if($timeline[$i]->timelineable_type == 'App\Tweet')
+                            <x-tweet-box :tweet="$timeline[$i]->timelineable" />
+                        @endif
+                        @if($timeline[$i]->timelineable_type == 'App\Retweet')
+                            @if($timeline[$i]->timelineable->body == NULL)
+                                <x-retweet-box :retweet="$timeline[$i]->timelineable" />
+                            @endif
+                        @endif
+                    @endfor
+                </div> 
             </div>
             {{-- tweets and replies tab--}}
             <div class="tab-pane fade" id="pills-tweetsandreplies" role="tabpanel" aria-labelledby="pills-profile-tab">
-                @foreach ($tweets as $tweet)
-                <div class="row adjust tweet-box" style="transform: rotate(0);">
-                    <a href="/users/{{$tweet->user->id}}/tweet/{{$tweet->id}}" class="stretched-link"></a>
-                    <div class="col-lg-12 pl-2 py-2" style="border-bottom: 1px solid rgba(0,0,0, .25);">
-                        <div class="d-flex">
-                            <a href="/users/{{$tweet->user->id}}" style="position: relative; z-index: 1;">
-                                <img class="rounded-circle mr-2"
-                                style="max-height: 60px" 
-                                src="https://i.pravatar.cc/300?u={{$tweet->user->email}}" 
-                                alt="profile_picture">
-                            </a>
-                            <div class="col-lg-11">
-                                <div class="d-flex align-items-start">
-                                    <span class="h6 font-weight-bold mr-2">
-                                        <a href="/users/{{$tweet->user->id}}" style="position: relative; z-index: 1;">
-                                            {{$tweet->user->name}}
-                                        </a>
-                                    </span>
-                                    <span class="h6">
-                                        {{Carbon\Carbon::createFromTimeStamp(strtotime($tweet->created_at))->diffForHumans(null, true)}}
-                                    </span>
-                                </div>
-                                <p class="justify-text">
-                                    {{$tweet->body}}
-                                </p>
-                                <div class="pb-2 d-flex">
-                                    <span class="mr-5">
-                                        <form action="">
-                                            <button class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;">
-                                                <i class="fa fa-comment fa-lg custom-text-color comment"></i>
-                                            </button>
-                                        </form>
-                                    </span>
-                                    <span class="mr-5">
-                                        <button class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;">
-                                            <i class="fa fa-retweet fa-lg custom-text-color retweet"></i>
-                                        </button >
-                                    </span>
-                                    <span class="">
-                                        @if(App\Like::where(['user_id' => Auth::id(), 'likeable_id' => $tweet->id])->count() > 0)
-                                            <form action="/likes/delete" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
-                                                <button type="submit" class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;">
-                                                    <i class="fa fa-heart fa-lg custom-text-color heart" style="color: red;"> {{($tweet->likes->count() > 0)? $tweet->likes->count(): ''}}</i>
-                                                </button>
-                                            </form>
-                                            @else
-                                            <form action="/likes" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
-                                                {{-- <input type="hidden" name="user_id" value="{{Auth::id()}}"> --}}
-                                                <button type="submit" class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;">
-                                                    <i class="fa fa-heart fa-lg custom-text-color heart"> {{($tweet->likes->count() > 0)? $tweet->likes->count(): ''}}</i>
-                                                </button>
-                                            </form>
-                                        @endif
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row" id="tweets">
+                    @for ($i = 0; $i < count($timeline); $i++)
+                        @if($timeline[$i]->timelineable_type == 'App\Tweet')
+                            <x-tweet-box :tweet="$timeline[$i]->timelineable" />
+                        @endif
+                        @if($timeline[$i]->timelineable_type == 'App\Retweet')
+                            @if($timeline[$i]->timelineable->body == NULL)
+                                <x-retweet-box :retweet="$timeline[$i]->timelineable" />
+                            @endif
+                        @endif
+                    @endfor
                 </div>
-                @endforeach
             </div>
             <div class="tab-pane fade" id="pills-likes" role="tabpanel" aria-labelledby="pills-contact-tab">
                 @for ($i = count($likes)-1; $i >= 0; $i--)

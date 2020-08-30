@@ -10,9 +10,11 @@ $(document).ready(function() {
      //display when fully loaded
      $('#tweets').show();
      
+     //disable follow button after clicking
+    //  $("#followBtn").click(function(){
+    //     if(this.followBtn = 'click'){
+    //       $("#followBtn").attr("disabled", true);
+    //     }
+    //  })
 });
 
-
-$(window).scroll(function() {
-    sessionStorage.scrollTop = $(this).scrollTop();
-  });

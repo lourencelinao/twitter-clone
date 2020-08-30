@@ -62,6 +62,9 @@
                 margin-bottom: 30px;
             }
         </style>
+        {{-- font awesome --}}
+    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     </head>
     <body style="background-color: #1DA1F2;">
         <div class="flex-center position-ref full-height">
@@ -85,9 +88,12 @@
                 </div>
                     <p>made by Lourence Linao</p>
                 <div class="links" >
-                    <a href="https://github.com/lourencelinao/twitter-clone.git" target="_blank" style="color: white;">Github</a>
-                    <a href="https://www.linkedin.com/in/lourence-linao-124150177/" target="_blank" style="color: white;">LinkedIn</a>
-                    <a href="#" style="color: white;">Resume</a>
+                    <a href="https://github.com/lourencelinao/twitter-clone.git" target="_blank" style="color: white;">
+                        <i class="fab fa-github fa-3x"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/lourence-linao-124150177/" target="_blank" style="color: white;">
+                        <i class="fab fa-linkedin fa-3x"></i>
+                    </a>
                 </div>
             </div>
         </div>

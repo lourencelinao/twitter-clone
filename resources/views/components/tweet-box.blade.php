@@ -128,11 +128,12 @@
                             </button>
                         </form>
                         @else
-                        <form action="/likes" method="POST">
+                        <form action="/likes" method="POST" onsubmit="heartBtn.disabled = true; return true;">
                             @csrf
                             <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
                             {{-- <input type="hidden" name="user_id" value="{{Auth::id()}}"> --}}
-                            <button type="submit" class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;">
+                            <button type="submit" class="btn btn-sm rounded-circle" 
+                            style="position: relative; z-index: 1;" id="heartBtn">
                                 <i class="fa fa-heart fa-lg custom-text-color heart mr-1"> 
                                     {{($tweet->likes->count() > 0)? $tweet->likes->count(): ''}}
                                 </i>

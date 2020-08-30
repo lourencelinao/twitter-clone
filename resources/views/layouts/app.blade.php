@@ -124,7 +124,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="/tweets" method="POST">
+                        <form action="/tweets" method="POST" onsubmit="sideTweetBtn.disabled = true; return true;">
                             @csrf
                             <div class="modal-body">
                                 <div class="row">
@@ -146,7 +146,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn custom-background-color text-white rounded-pill">
+                                <button type="submit" class="btn custom-background-color text-white rounded-pill" id="sideTweetBtn">
                                     Tweet
                                 </button>
                             </div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('middle-content')
-    <form action="/tweets" method="POST">
+    <form action="/tweets" method="POST" onsubmit="tweetBtn.disabled = true; return true;">
         @csrf
     <div class="row py-2" style="border-bottom: 5px solid gray;">
         {{-- home --}}
@@ -36,7 +36,8 @@
                 </button>
             </div>
             <div class="ml-auto pt-2 pb-2">
-                <button type="submit" class="btn custom-background-color text-white" style="border-radius: 25px;">
+                <button type="submit" class="btn custom-background-color text-white" 
+                style="border-radius: 25px;" id="tweetBtn">
                     Tweet
                 </button>
             </div>

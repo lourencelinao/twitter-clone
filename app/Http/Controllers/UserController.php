@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Follow;
+use App\Timeline;
 use App\Tweet;
 use App\User;
 use Illuminate\Http\Request;
@@ -28,8 +29,8 @@ class UserController extends Controller
     }
 
     public function show(User $user){
-        //retrieve all the tweets of the user
-        $tweets = $user->tweets()->latest()->get();
+        // //retrieve all the tweets of the user
+        // $tweets = $user->tweets()->latest()->get();
 
         //take all users except the user 
         $users = User::all()->except($user->id);
@@ -48,7 +49,10 @@ class UserController extends Controller
         $followers = Follow::where('following_user_id' , Auth::id())->get();
         //pluck all their id's only for easier query and faster loading
         $followers = $followers->pluck('user_id'); 
-        return view('user.show', compact(['tweets', 'users', 'profile', 'following', 'likes', 'followers']));
+
+        //filter tweets by returning the tweets and retweets of the user in ascending order
+        $timeline = Timeline::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get();
+        return view('user.show', compact(['timeline', 'users', 'profile', 'following', 'likes', 'followers']));
     }
 
     public function update(User $user){
