@@ -21,6 +21,14 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+        DB::table('users')->insert([
+            'name' => 'test',
+            // 'description' => 'wtf',
+            'email' => 'test@test.com',
+            'password' => bcrypt('test'),
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
 
         // $faker = Factory::create();
         // for($i = 0; $i < 5; $i++){
@@ -34,7 +42,8 @@ class UserSeeder extends Seeder
         $users = factory(App\User::class, 10)->create();
         for($i = 2; $i <= 10; $i++){
             for($x = 0; $x < 5; $x++){
-                factory(App\Tweet::class)->create(['user_id' => $i]);
+                $tweet = factory(App\Tweet::class)->create(['user_id' => $i]);
+                $tweet->timeline()->create(['user_id' => $tweet->user_id, 'created_at' => $tweet->created_at]);
             }
         }
     }

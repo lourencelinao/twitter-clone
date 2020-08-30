@@ -43,7 +43,12 @@ class UserController extends Controller
         $likes = $user->likes->sortByDesc('created_at');
         $profile = $user;
         $following = Auth::user()->follows;
-        return view('user.show', compact(['tweets', 'users', 'profile', 'following', 'likes']));
+
+        //take all followers
+        $followers = Follow::where('following_user_id' , Auth::id())->get();
+        //pluck all their id's only for easier query and faster loading
+        $followers = $followers->pluck('user_id'); 
+        return view('user.show', compact(['tweets', 'users', 'profile', 'following', 'likes', 'followers']));
     }
 
     public function update(User $user){

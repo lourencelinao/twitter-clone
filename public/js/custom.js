@@ -4,7 +4,15 @@ $(document).ready(function() {
         $("#pills-tab").find(".active").removeClass("active");
         $(this).addClass("active");
      });
-
+     if (sessionStorage.scrollTop != "undefined") {
+        $(window).scrollTop(sessionStorage.scrollTop);
+      }
      //display when fully loaded
      $('#tweets').show();
+     
 });
+
+
+$(window).scroll(function() {
+    sessionStorage.scrollTop = $(this).scrollTop();
+  });

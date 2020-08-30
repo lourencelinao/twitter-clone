@@ -8,9 +8,11 @@ class UserBox extends Component
 {
 
     public $user;
-    public function __construct($user)
+    public $followers;
+    public function __construct($user, $followers)
     {
         $this->user = $user;
+        $this->followers = $followers;
     }
 
 

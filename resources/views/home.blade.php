@@ -44,10 +44,17 @@
         </div>
     </div>
     {{-- tweet boxes --}}
-    <div class="row" id="tweets" style="display:none;">
-        @foreach ($tweets as $tweet)
-            <x-tweet-box :tweet="$tweet" />
-        @endforeach
+    <div class="row" id="tweets" style="display:none; ">
+        @for ($i = 0; $i < count($timeline); $i++)
+            @if($timeline[$i]->timelineable_type == 'App\Tweet')
+                <x-tweet-box :tweet="$timeline[$i]->timelineable" />
+            @endif
+            @if($timeline[$i]->timelineable_type == 'App\Retweet')
+                @if($timeline[$i]->timelineable->body == NULL)
+                    <x-retweet-box :retweet="$timeline[$i]->timelineable" />
+                @endif
+            @endif
+    @endfor
     </div> 
 @endsection
 
@@ -69,7 +76,7 @@
 
             {{-- user box --}}
             @foreach ($users as $user)
-                <x-user-box :user="$user" />
+                <x-user-box :user="$user" :followers="$followers"/>
             @endforeach
 
             <div class="col-lg-9" style="border-radius: 0 0 15px 15px;">

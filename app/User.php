@@ -53,4 +53,8 @@ class User extends Authenticatable
     public function retweets(){
         return $this->hasMany(Retweet::class);
     }
+
+    public function timeline(){
+        return $this->hasOne(Timeline::class);
+    }
 }

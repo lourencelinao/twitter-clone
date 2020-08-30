@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Like;
+use App\Retweet;
+use App\Timeline;
 use App\User;
 use App\Tweet;
 use Illuminate\Http\Request;
@@ -36,9 +38,13 @@ class TweetController extends Controller
             'tweet' => 'required | max: 255'
         ]);
         
-        Auth::user()->tweets()->create([
+        //store in tweet table
+        $tweet = Auth::user()->tweets()->create([
             'body' => $data['tweet']
         ]);
+        // dd($tweet->id);
+        $tweet->timeline()->create(['user_id' => Auth::id(), 'created_at' => $tweet->created_at]);
+        
         return redirect()->back();
     }
 
@@ -49,9 +55,25 @@ class TweetController extends Controller
     }
 
     public function destroy(Tweet $tweet){
+
+        //delete the retweets of the tweet in the timeline table
+        $retweets = $tweet->retweets;
+        for ($i=0; $i < count($retweets); $i++) { 
+            // $retweets[$i]->timeline()->where('retweetable_id')->delete();
+            Timeline::where(['timelineable_id' => $retweets[$i]->id, 'timelineable_type' => 'App\Retweet' ])->delete();
+        }
+        //delete the retweets of the tweet in the retweet table
+        Retweet::where([
+            'retweetable_id' => $tweet->id,
+            'retweetable_type' => 'App\Tweet'
+            ])->delete();
         //delete likes of the tweet
         Like::where('likeable_id', $tweet->id)->delete();
-        //delete tweet
+
+        //delete tweet on the timeline table
+        $tweet->timeline()->delete();
+
+        //delete tweet on the tweet table
         $tweet->delete();
         return redirect()->back();
     }

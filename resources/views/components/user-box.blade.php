@@ -9,8 +9,14 @@
             </a>
         </div>
         <div class="d-flex flex-column">
-            <span class="h6 font-weight-bold mr-2">
-                <a href="/users/{{$user->id}}">{{$user->name}}</a>
+            <span class="mr-2">
+                <a href="/users/{{$user->id}}" class="h6 font-weight-bold ">{{$user->name}}</a>
+                <div class="d-flex">
+                    <div class="mr-4">@handle</div>
+                    @if($followers->contains($user->id))
+                        <div class="ml-auto bg-secondary text-white">Follows you</div>
+                    @endif
+                </div>
             </span>
             {{-- <span>{{$user->name}}</span> --}}
         </div>

@@ -15,4 +15,8 @@ class Retweet extends Model
     public function retweetable(){
         return $this->morphTo();
     }
+
+    public function timeline(){
+        return $this->morphMany('App\Timeline', 'timelineable');
+    }
 }

@@ -348,7 +348,7 @@
 
         {{-- user box --}}
         @foreach ($users as $user)
-            <x-user-box :user="$user" />
+            <x-user-box :user="$user" :followers="$followers"/>
         @endforeach
 
         <div class="col-lg-9" style="border-radius: 0 0 15px 15px;">
@@ -414,4 +414,4 @@
             </div>
           </div>
     </form>
-  </div>
+</div>

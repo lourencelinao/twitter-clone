@@ -42,3 +42,4 @@ Route::patch('/users/{user}', 'UserController@update')->name('users.update');
 Route::delete('/likes/delete', 'LikeController@destroy')->name('likes.delete');
 Route::delete('/follows/delete', 'FollowController@destroy')->name('follows.delete');
 Route::delete('/tweets/{tweet}', 'TweetController@destroy')->name('tweets.delete');
+Route::delete('/retweets/{retweet}', 'RetweetController@destroy')->name('retweets.delete');
