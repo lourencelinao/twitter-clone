@@ -44,9 +44,9 @@ class RetweetController extends Controller
         // }else{
 
         // }
-
+        // dd($retweet);
         $retweet->timeline()->where('user_id', Auth::id())->delete();
-        $retweet->where('user_id', Auth::id())->delete();
+        $retweet->delete();
 
         return redirect()->back();
     }
