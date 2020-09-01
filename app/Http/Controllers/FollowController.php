@@ -16,7 +16,7 @@ class FollowController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function store(){
         $follow = new Follow();
         $follow->user_id = Auth::id();
@@ -27,7 +27,7 @@ class FollowController extends Controller
         //     $tweets[$i]->timeline()->create(['user_id' => Auth::id(), 'created_at' => $tweets[$i]->created_at]);
         // }
         // $retweets = Retweet::where('user_id', $follow->following_user_id)->get();
-        // for ($i = 0; $i < count($retweets); $i++) { 
+        // for ($i = 0; $i < count($retweets); $i++) {
         //     $retweets[$i]->timeline()->create(['user_id' => Auth::id(), 'created_at' => $retweets[$i]->created_at]);
         // }
 
@@ -48,4 +48,6 @@ class FollowController extends Controller
         $follow = Follow::where(['user_id' => Auth::id(), 'following_user_id' => $user->id])->delete();
         return redirect()->back();
     }
+
+
 }

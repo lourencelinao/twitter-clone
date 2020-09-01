@@ -82,6 +82,8 @@
                 </div>
             @endif
 
+
+
             <div class="content" style="color: white;">
                 <div class="title m-b-md text-white">
                     Twitter
