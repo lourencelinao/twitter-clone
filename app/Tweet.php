@@ -26,4 +26,9 @@ class Tweet extends Model
     public function timeline(){
         return $this->morphMany('App\Timeline', 'timelineable');
     }
+    
+    public function comments()
+    {
+        return $this->morphMany('App\Comment', 'commentable');
+    }
 }

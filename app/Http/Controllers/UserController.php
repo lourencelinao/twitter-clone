@@ -51,7 +51,10 @@ class UserController extends Controller
         $followers = $followers->pluck('user_id'); 
 
         //filter tweets by returning the tweets and retweets of the user in ascending order
-        $timeline = Timeline::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get();
+        $timeline = Timeline::where('user_id', $user->id)->whereHasMorph(
+            'timelineable',
+            ['App\Tweet', 'App\Retweet', 'App\Comment']
+        )->orderBy('created_at', 'DESC')->get();
         return view('user.show', compact(['timeline', 'users', 'profile', 'following', 'likes', 'followers']));
     }
 

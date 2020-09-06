@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Like;
 use App\Retweet;
 use App\Timeline;
@@ -51,7 +52,8 @@ class TweetController extends Controller
     public function show(User $user, Tweet $tweet){
         $user = User::findOrFail($user->id);
         $tweet = Tweet::findorFail($tweet->id);
-        return view('tweet.show', compact(['user', 'tweet']));
+        $comments = $tweet->comments;
+        return view('tweet.show', compact(['user', 'tweet', 'comments']));
     }
 
     public function destroy(Tweet $tweet){

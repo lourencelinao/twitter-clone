@@ -124,6 +124,9 @@
                                 <x-retweet-box :retweet="$timeline[$i]->timelineable" />
                             @endif
                         @endif
+                        @if($timeline[$i]->timelineable_type == 'App\Comment')
+                            <x-comment-box :comment="$timeline[$i]->timelineable" />
+                        @endif
                     @endfor
                 </div>
             </div>
@@ -149,6 +152,42 @@
                                         <span class="h6">
                                             {{Carbon\Carbon::createFromTimeStamp(strtotime($likes[$i]->likeable->created_at))->diffForHumans(null, true)}}
                                         </span>
+                                        <div class="ml-auto">
+                                            <div class="dropdown">
+                                                <button class="btn rounded-circle btn-sm chevron-down" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
+                                                aria-haspopup="true" aria-expanded="false" style="position: relative; z-index: 1;">
+                                                    <i class="fas fa-chevron-down"></i>
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    {{-- if the owner of the tweet --}}
+                                                    @if($likes[$i]->likeable->user->id == Auth::id())
+                                                        <form action="/tweets/{{$likes[$i]->likeable->id}}" method="POST">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button class="dropdown-item">Delete</button>
+                                                        </form>
+                                                        @else
+                                                            {{-- if followed --}}
+                                                            @if(App\Follow::where(['user_id' => Auth::id(), 'following_user_id' => $likes[$i]->likeable->user_id])->count() > 0)
+                                                                <form action="/follows/delete" method="POST">
+                                                                    @csrf
+                                                                    @method('delete')
+                                                                    <input type="hidden" name="user_id" value="{{$likes[$i]->likeable->user_id}}">
+                                                                    <button class="dropdown-item">Unfollow {{$likes[$i]->likeable->user->name}}</button>
+                                                                </form>
+                                                                {{-- if not followed --}}
+                                                                @else
+                                                                <form action="/follows" method="POST">
+                                                                    @csrf
+                                                                    <input type="hidden" name="user_id" value="{{$likes[$i]->likeable->user_id}}">
+                                                                    <button class="dropdown-item">Follow {{$likes[$i]->likeable->user->name}}</button>
+                                                                </form>
+                                                            @endif      
+                                                    @endif
+                                                    {{-- if not the owner of the tweet --}}
+                                                </div>
+                                              </div>
+                                        </div>
                                     </div>
                                     <p class="justify-text">
                                         {{$likes[$i]->likeable->body}}

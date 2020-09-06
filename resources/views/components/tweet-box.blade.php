@@ -24,20 +24,32 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          @if($tweet->user->id == Auth::id())
-                            <form action="/tweets/{{$tweet->id}}" method="POST">
-                                @csrf
-                                @method('delete')
-                                <button class="dropdown-item">Delete</button>
-                            </form>
-                            @else
-                                <form action="/follows/delete" method="POST">
+                            {{-- if the owner of the tweet --}}
+                            @if($tweet->user->id == Auth::id())
+                                <form action="/tweets/{{$tweet->id}}" method="POST">
                                     @csrf
                                     @method('delete')
-                                    <input type="hidden" name="user_id" value="{{$tweet->user->id}}">
-                                    <button class="dropdown-item">Unfollow {{$tweet->user->name}}</button>
+                                    <button class="dropdown-item">Delete</button>
                                 </form>
-                          @endif
+                                @else
+                                    {{-- if followed --}}
+                                    @if(App\Follow::where(['user_id' => Auth::id(), 'following_user_id' => $tweet->user_id])->count() > 0)
+                                        <form action="/follows/delete" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <input type="hidden" name="user_id" value="{{$tweet->user_id}}">
+                                            <button class="dropdown-item">Unfollow {{$tweet->user->name}}</button>
+                                        </form>
+                                        {{-- if not followed --}}
+                                        @else
+                                        <form action="/bitch">
+                                            @csrf
+                                            <input type="hidden" name="user_id" value="{{$tweet->user_id}}">
+                                            <button class="dropdown-item">Follow {{$tweet->user->name}}</button>
+                                        </form>
+                                    @endif      
+                            @endif
+                            {{-- if not the owner of the tweet --}}
                         </div>
                       </div>
                 </div>
@@ -48,12 +60,71 @@
             <div class="pb-2 d-flex">
                 {{-- comment --}}
                 <span class="mr-5">
-                    <a href="" class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;">
-                        <i class="fa fa-comment fa-lg custom-text-color comment"></i>
-                    </a>
+                    <button class="btn btn-sm rounded-circle" style="position: relative; z-index: 1;"
+                    data-toggle="modal" data-target="#tweet{{$tweet->id}}">
+                    <i class="fa fa-comment fa-lg custom-text-color comment"> 
+                        {{($tweet->comments->count() != 0)? $tweet->comments->count(): ''}}
+                    </i>
+                    </button>
+                    <!-- Modal --> 
+                    {{-- make every modal unique so that it wont stick to one tweet box --}}
+                    <div class="modal fade" id="tweet{{$tweet->id}}" tabindex="-1" role="dialog" aria-labelledby="tweet{{$tweet->id}}Label" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="/comments/tweet" method="POST">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="d-flex">
+                                            <img class="rounded-circle"
+                                                style="max-height: 60px" 
+                                                src="https://i.pravatar.cc/300?u={{$tweet->user->email}}" 
+                                                alt="profile_picture">
+                                            <div class="col-11">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="h6 font-weight-bold mr-2">
+                                                        {{$tweet->user->name}}
+                                                    </span>
+                                                    <span class="h6">
+                                                        {{Carbon\Carbon::createFromTimeStamp(strtotime($tweet->created_at))->diffForHumans(null, true)}}
+                                                    </span>
+                                                </div>
+                                                <p class="justify-text">
+                                                    {{$tweet->body}}
+                                                </p>
+                                                <div class="text-secondary">
+                                                    Replying to {{$tweet->user->name}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex mt-3">
+                                            <img class="rounded-circle"
+                                                style="max-height: 60px" 
+                                                src="https://i.pravatar.cc/300?u={{Auth::user()->email}}" 
+                                                alt="profile_picture">
+                                            <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
+                                            <textarea class="form-control @error('reply') is-invalid @enderror ml-1" name="reply" 
+                                            id="" rows="2" cols="2"
+                                            placeholder="Tweet your reply" style="border: none;">
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn custom-background-color text-white rounded-pill" id="replyTweetBtn">
+                                            Reply
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </span>
                 {{-- retweet --}}
-                <span class="mr-5" >
+                <span class="mr-5 {{($tweet->comments->count() == 0)? 'ml-3': ''}}">
                     <div class="btn-group">
                         {{-- if more than one retweet --}}
                         @if(App\Retweet::where([
@@ -118,7 +189,7 @@
                 </span>
                 {{-- heart --}}
                 <span class=""> 
-                    @if(App\Like::where(['user_id' => Auth::id(), 'likeable_id' => $tweet->id])->count() > 0)
+                    @if(App\Like::where(['user_id' => Auth::id(), 'likeable_id' => $tweet->id, 'likeable_type' => 'App\Tweet'])->count() > 0)
                         <form action="/likes/delete" method="POST">
                             @csrf
                             @method('DELETE')

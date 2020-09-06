@@ -57,4 +57,8 @@ class User extends Authenticatable
     public function timeline(){
         return $this->hasOne(Timeline::class);
     }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
 }

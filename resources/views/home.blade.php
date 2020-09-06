@@ -55,7 +55,10 @@
                     <x-retweet-box :retweet="$timeline[$i]->timelineable" />
                 @endif
             @endif
-    @endfor
+            {{-- @if($timeline[$i]->timelineable_type == 'App\Comment')
+                <x-comment-box :comment="$timeline[$i]->timelineable" />
+            @endif --}}
+        @endfor
     </div> 
 @endsection
 

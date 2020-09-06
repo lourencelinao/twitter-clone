@@ -36,10 +36,16 @@ Route::post('/tweets', 'TweetController@store')->name('tweets.store');
 Route::post('/follows', 'FollowController@store')->name('follows.store');
 Route::post('/likes', 'LikeController@store')->name('likes.store');
 Route::post('/retweets', 'RetweetController@store')->name('retweets.store');
+Route::post('/retweets/comment', 'RetweetController@comment')->name('retweets.comment');
+Route::post('/comments/tweet', 'CommentController@tweet')->name('comments.tweet');
+Route::post('/comments/comment', 'CommentController@comment')->name('comments.comment');
+Route::post('/comments/likes', 'LikeController@comment')->name('likes.comment');
 
 Route::patch('/users/{user}', 'UserController@update')->name('users.update');
 
 Route::delete('/likes/delete', 'LikeController@destroy')->name('likes.delete');
+Route::delete('/comments/likes/delete', 'LikeController@commentsDestroy')->name('likes.commentDestroy');
 Route::delete('/follows/delete', 'FollowController@destroy')->name('follows.delete');
 Route::delete('/tweets/{tweet}', 'TweetController@destroy')->name('tweets.delete');
 Route::delete('/retweets/{retweet}', 'RetweetController@destroy')->name('retweets.delete');
+Route::delete('/comments/{comment}', 'CommentController@destroy')->name('comments.delete');
